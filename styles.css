@@ -48,7 +48,7 @@ header {
 }
 
 .dropbtn {
-    background-color: #2e71a5;
+    background-color: #1a5e92;
     color: white;
     padding: 10px 16px;
     font-size: 16px;
@@ -58,7 +58,7 @@ header {
 }
 
 .dropbtn:hover {
-    background-color: #226598;
+    background-color: #0a3d65;
 }
 
 .dropdown-content {
