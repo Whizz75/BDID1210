@@ -1,35 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Motz Auto & Tyres(PTY) Ltd</title>
-    <link rel="stylesheet" href="C:\Users\bakuena\Downloads\Our Interface\mohau.css">
+    <meta charset="UTF-8">
+    <title>Motz Auto & Tyres – Sales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #257db3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #257db3;
+            color: white;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+        }
+
+        #summary {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .total-box {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: #257db3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1a5d87;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <h1>Motz Auto & Tyres(PTY) Ltd</h1>
-    </header>
 
-    <h4>Welcome to Motz Auto & Tyres (PTY) Ltd.</h4>
+    <h1>Sales Page</h1>
 
-    <p>At Motz Auto & Tyres, we’re committed to delivering quality, performance, and style. Explore our extensive selection of premium cars, rims, and tyres, carefully chosen to meet the diverse needs of our valued customers. Whether you're looking for a reliable daily driver, a powerful performance vehicle, or the perfect set of rims and tyres to elevate your ride, we have something for everyone.
-        
-        Our knowledgeable team is here to assist you in finding the ideal match for your driving style and preferences. Experience exceptional service and expertise at Motz Auto & Tyres—where your journey begins with confidence.</p>
-    <br>
-    
-    <img src="C:\Users\bakuena\Downloads\Crop800x600.jpeg" alt="Image 1" style="width:600px;height:400px;">
-    <img src="C:\Users\bakuena\Downloads\Crop800x600 (1).jpeg" alt="Image 2" style="width:600px;height:400px;">
-    <img src="C:\Users\bakuena\Downloads\card-100-satisfaction.webp" alt="Image 3" style="width:600px;height:400px;">
-    <img src="C:\Users\bakuena\Downloads\1000260450.jpg" alt="Image 4" style="width:600px;height:400px;">
-    <br>
-    <br>
+    <table id="product-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Brand</th>
+                <th>Price (M)</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Products will load here -->
+        </tbody>
+    </table>
 
-    <!-- Centered Buttons -->
-    <div class="button-container">
-        <button class="button" onclick="window.location.href='file:///C:/Users/bakuena/Downloads/Our%20Interface/Car%20Page.html'">Cars</button>
-        <button class="button" onclick="window.location.href='file:///C:/Users/bakuena/Downloads/Our%20Interface/Tyres%20Page.html'">Tyres</button>
-        <button class="button" onclick="window.location.href='file:///C:/Users/bakuena/Downloads/Our%20Interface/Rims%20Page.html'">Rims</button>
+    <div class="total-box">
+        <p><strong>Total:</strong> M<span id="total">0.00</span></p>
+
+        <label for="payment">Payment Amount (M): </label>
+        <input type="number" id="payment" placeholder="Enter payment" />
+
+        <p><strong>Change:</strong> M<span id="change">0.00</span></p>
+
+        <button onclick="calculateChange()">Calculate Change</button>
     </div>
+
+    <script>
+        let products = [];
+
+        // Fetch products from API
+        fetch('https://flask-on-render-17g8.onrender.com/api/data')
+            .then(response => response.json())
+            .then(data => {
+                products = data;
+                const tableBody = document.querySelector('#product-table tbody');
+
+                data.forEach((product, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${product.productname}</td>
+                        <td>${product.brandname}</td>
+                        <td>${product.sellingprice}</td>
+                        <td><input type="number" value="0" min="0" data-price="${product.sellingprice}" onchange="updateTotal()" /></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+            });
+
+        function updateTotal() {
+            let total = 0;
+            document.querySelectorAll('input[type="number"][data-price]').forEach(input => {
+                const quantity = parseInt(input.value) || 0;
+                const price = parseFloat(input.getAttribute('data-price'));
+                total += quantity * price;
+            });
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        function calculateChange() {
+            const total = parseFloat(document.getElementById('total').textContent);
+            const payment = parseFloat(document.getElementById('payment').value) || 0;
+            const change = payment - total;
+
+            document.getElementById('change').textContent = change >= 0 ? change.toFixed(2) : 'Insufficient payment';
+        }
+    </script>
 
 </body>
 </html>
