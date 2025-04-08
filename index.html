@@ -68,25 +68,10 @@
             cursor: pointer;
         }
 
-        /* Product List Styling */
-        .product-list {
+        /* Data Section */
+        .data-container {
+            margin-top: 20px;
             text-align: center;
-            margin-top: 50px;
-        }
-
-        .product-item {
-            display: inline-block;
-            margin: 20px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            width: 250px;
-            text-align: left;
-            background-color: #f9f9f9;
-        }
-
-        .product-item h4 {
-            margin: 10px 0;
-            color: #257db3;
         }
     </style>
 </head>
@@ -124,36 +109,25 @@
         <button class="button" onclick="window.location.href='rims.html'">Rims</button>
     </div>
 
-    <!-- Products List Section -->
-    <div class="product-list" id="product-list">
-        <h2>Our Products</h2>
-        <!-- Products will be injected here by JavaScript -->
+    <!-- Data Section -->
+    <div class="data-container">
+        <h3>Product List</h3>
+        <ul id="product-list"></ul>
     </div>
 
     <script>
-        // Fetch data from the API endpoint and populate the product list
-        fetch('https://flask-on-render-17g8.onrender.com/api/data')  // Replace with your actual API URL
+        // Fetch data from the API and display it
+        fetch('https://<your-api-url>/api/data')
             .then(response => response.json())
             .then(data => {
                 const productList = document.getElementById('product-list');
-
-                data.forEach(product => {
-                    // Create product item elements
-                    const productItem = document.createElement('div');
-                    productItem.classList.add('product-item');
-
-                    // Product name and description
-                    productItem.innerHTML = `
-                        <h4>${product[1]}</h4>  <!-- Product name -->
-                        <p>Price: $${product[2]}</p>  <!-- Product price -->
-                        <p>Description: ${product[3]}</p>  <!-- Product description -->
-                    `;
-
-                    // Append product item to the product list container
-                    productList.appendChild(productItem);
+                data.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item.name; // Assuming the 'name' field exists
+                    productList.appendChild(li);
                 });
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('Error fetching data:', error));
     </script>
 </body>
 </html>
