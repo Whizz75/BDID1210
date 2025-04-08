@@ -67,6 +67,27 @@
             font-size: 16px;
             cursor: pointer;
         }
+
+        /* Product List Styling */
+        .product-list {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .product-item {
+            display: inline-block;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            width: 250px;
+            text-align: left;
+            background-color: #f9f9f9;
+        }
+
+        .product-item h4 {
+            margin: 10px 0;
+            color: #257db3;
+        }
     </style>
 </head>
 <body>
@@ -102,5 +123,37 @@
         <button class="button" onclick="window.location.href='tyres.html'">Tyres</button>
         <button class="button" onclick="window.location.href='rims.html'">Rims</button>
     </div>
+
+    <!-- Products List Section -->
+    <div class="product-list" id="product-list">
+        <h2>Our Products</h2>
+        <!-- Products will be injected here by JavaScript -->
+    </div>
+
+    <script>
+        // Fetch data from the API endpoint and populate the product list
+        fetch('https://your-app.onrender.com/api/data')  // Replace with your actual API URL
+            .then(response => response.json())
+            .then(data => {
+                const productList = document.getElementById('product-list');
+
+                data.forEach(product => {
+                    // Create product item elements
+                    const productItem = document.createElement('div');
+                    productItem.classList.add('product-item');
+
+                    // Product name and description
+                    productItem.innerHTML = `
+                        <h4>${product[1]}</h4>  <!-- Product name -->
+                        <p>Price: $${product[2]}</p>  <!-- Product price -->
+                        <p>Description: ${product[3]}</p>  <!-- Product description -->
+                    `;
+
+                    // Append product item to the product list container
+                    productList.appendChild(productItem);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
 </body>
 </html>
