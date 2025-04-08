@@ -5,13 +5,11 @@
     <title>Motz Auto & Tyres(PTY) Ltd</title>
     <link rel="stylesheet" href="styles.css" />
     <style>
-        /* Basic Reset */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
         }
 
-        /* Header Style */
         header {
             background-color: #257db3;
             color: white;
@@ -24,7 +22,6 @@
             font-size: 24px;
         }
 
-        /* Nav Bar */
         nav {
             position: absolute;
             top: 50%;
@@ -44,18 +41,15 @@
             color: #ffcc00;
         }
 
-        /* Centered welcome text */
         .center-text {
             text-align: center;
             margin: 20px 0;
         }
 
-        /* Image Styling */
         img {
             margin: 10px;
         }
 
-        /* Button container */
         .button-container {
             text-align: center;
             margin-top: 30px;
@@ -68,10 +62,20 @@
             cursor: pointer;
         }
 
-        /* Data Section */
-        .data-container {
-            margin-top: 20px;
-            text-align: center;
+        /* Product list styles */
+        #product-list {
+            list-style: none;
+            padding: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        #product-list li {
+            margin: 10px auto;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+            max-width: 600px;
+            text-align: left;
         }
     </style>
 </head>
@@ -89,12 +93,18 @@
         </div>        
     </header>    
 
-    <!-- Centered welcome message -->
+    <!-- Welcome message -->
     <div class="center-text">
         <h4>Welcome to Motz Auto & Tyres (PTY) Ltd.</h4>
     </div>
 
     <p>At Motz Auto & Tyres, we’re committed to delivering quality, performance, and style...</p>
+
+    <!-- ✅ Product List Container -->
+    <div class="center-text">
+        <h3>Our Products</h3>
+        <ul id="product-list"></ul>
+    </div>
 
     <!-- Images -->
     <img src="Crop800x600.jpeg" alt="Image 1" style="width:600px;height:400px;">
@@ -109,25 +119,27 @@
         <button class="button" onclick="window.location.href='rims.html'">Rims</button>
     </div>
 
-    <!-- Data Section -->
-    <div class="data-container">
-        <h3>Product List</h3>
-        <ul id="product-list"></ul>
-    </div>
-
+    <!-- ✅ JavaScript to fetch products from API -->
     <script>
-        // Fetch data from the API and display it
-        fetch('https://flask-on-render-17g8.onrender.com/api/data')
+        fetch('https://flask-on-render-17g8.onrender.com/api/data') // Replace with your actual render URL
             .then(response => response.json())
             .then(data => {
-                const productList = document.getElementById('product-list');
-                data.forEach(item => {
-                    const li = document.createElement('li');
-                    li.textContent = item.name; // Assuming the 'name' field exists
-                    productList.appendChild(li);
-                });
+                const productList = document.getElementById("product-list");
+
+                if (data.length === 0) {
+                    productList.innerHTML = "<p>No products available.</p>";
+                } else {
+                    data.forEach(product => {
+                        const productElement = document.createElement("li");
+                        productElement.textContent = `Product Name: ${product.product_name} | Price: ${product.price}`;
+                        productList.appendChild(productElement);
+                    });
+                }
             })
-            .catch(error => console.error('Error fetching data:', error));
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.getElementById("product-list").innerHTML = "<p>Failed to load products.</p>";
+            });
     </script>
 </body>
 </html>
