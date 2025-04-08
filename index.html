@@ -131,7 +131,7 @@
                 } else {
                     data.forEach(product => {
                         const productElement = document.createElement("li");
-                        productElement.textContent = `Product Name: ${product.productname} | Price: ${product.sellingprice}`;
+                        productElement.textContent = `Product Name: ${product.brandname} | Product: ${product.productname} | Price: ${product.sellingprice}`;
                         productList.appendChild(productElement);
                     });
                 }
