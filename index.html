@@ -7,48 +7,54 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
         }
 
         header {
             background-color: #257db3;
             color: white;
             padding: 20px;
-            position: relative;
+            text-align: center;
         }
 
         header h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 28px;
         }
 
-        nav {
-            position: absolute;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
         }
 
-        nav a {
+        .nav-button {
+            background-color: #257db3;
             color: white;
+            padding: 15px 30px;
+            margin: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
             text-decoration: none;
-            margin-left: 20px;
-            font-weight: bold;
-            transition: color 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
-        nav a:hover {
-            color: #ffcc00;
+        .nav-button:hover {
+            background-color: #1a5d8f;
         }
     </style>
 </head>
 <body>
-    <!-- Header with nav -->
     <header>
         <h1>Motz Auto & Tyres(PTY) Ltd</h1>
-        <nav>
-            <a href="#">Sales</a>
-            <a href="#">Financial Records</a>
-        </nav>
     </header>
+
+    <div class="nav-container">
+        <a href="#" class="nav-button">Sales</a>
+        <a href="#" class="nav-button">Financial Records</a>
+    </div>
 </body>
 </html>
