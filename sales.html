@@ -37,11 +37,6 @@
             padding: 5px;
         }
 
-        #summary {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-
         .total-box {
             margin-top: 30px;
             padding: 15px;
@@ -54,91 +49,3 @@
 
         button {
             padding: 10px 20px;
-            margin-top: 15px;
-            background-color: #257db3;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #1a5d87;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>Sales Page</h1>
-
-    <table id="product-table">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Brand</th>
-                <th>Price (M)</th>
-                <th>Quantity</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Products will load here -->
-        </tbody>
-    </table>
-
-    <div class="total-box">
-        <p><strong>Total:</strong> M<span id="total">0.00</span></p>
-
-        <label for="payment">Payment Amount (M): </label>
-        <input type="number" id="payment" placeholder="Enter payment" />
-
-        <p><strong>Change:</strong> M<span id="change">0.00</span></p>
-
-        <button onclick="calculateChange()">Calculate Change</button>
-    </div>
-
-    <script>
-        let products = [];
-
-        // Fetch products from API
-        fetch('https://flask-on-render-17g8.onrender.com/api/data')
-            .then(response => response.json())
-            .then(data => {
-                products = data;
-                const tableBody = document.querySelector('#product-table tbody');
-
-                data.forEach((product, index) => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${product.productname}</td>
-                        <td>${product.brandname}</td>
-                        <td>${product.sellingprice}</td>
-                        <td>${product.quantity}</td>
-                        <td><input type="number" value="0" min="0" data-price="${product.sellingprice}" onchange="updateTotal()" /></td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching products:', error);
-            });
-
-        function updateTotal() {
-            let total = 0;
-            document.querySelectorAll('input[type="number"][data-price]').forEach(input => {
-                const quantity = parseInt(input.value) || 0;
-                const price = parseFloat(input.getAttribute('data-price'));
-                total += quantity * price;
-            });
-            document.getElementById('total').textContent = total.toFixed(2);
-        }
-
-        function calculateChange() {
-            const total = parseFloat(document.getElementById('total').textContent);
-            const payment = parseFloat(document.getElementById('payment').value) || 0;
-            const change = payment - total;
-
-            document.getElementById('change').textContent = change >= 0 ? change.toFixed(2) : 'Insufficient payment';
-        }
-    </script>
-
-</body>
-</html>
