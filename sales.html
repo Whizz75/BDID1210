@@ -151,7 +151,7 @@
 
                 if (quantity > 0) {
                     const li = document.createElement('li');
-                    li.textContent = `${products[index].productname} (${quantity})`;
+                    li.textContent = `${products[index].productname} (${products[index].brandname}) - Quantity: ${quantity}`;
                     selectedList.appendChild(li);
                     total += quantity * price;
                 }
