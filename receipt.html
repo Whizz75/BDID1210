@@ -85,7 +85,9 @@
         </div>
 
         <div class="receipt-details">
-            <p><strong>Customer Name:</strong> John Doe</p>
+            <script>
+                const customerName = localStorage.getItem('customerName');
+            </script>
             <p><strong>Date:</strong> <span id="current-date"></span></p>
         </div>
 
