@@ -140,28 +140,34 @@
             const tableBody = document.querySelector('#product-table tbody');
             tableBody.innerHTML = `<tr><td colspan="5">Failed to load products.</td></tr>`;
         });
-
     function updateTotal() {
-        let total = 0;
-        const selectedList = document.getElementById('selected-products');
-        selectedList.innerHTML = '';
+    let total = 0;
+    const selectedList = document.getElementById('selected-products');
+    selectedList.innerHTML = '';
 
-        document.querySelectorAll('input[type="number"][data-price]').forEach(input => {
-            const quantity = parseInt(input.value) || 0;
-            const price = parseFloat(input.getAttribute('data-price'));
-            const index = parseInt(input.getAttribute('data-index'));
+    document.querySelectorAll('input[type="number"][data-price]').forEach(input => {
+        let quantity = parseInt(input.value) || 0;
+        const index = parseInt(input.getAttribute('data-index'));
+        const price = parseFloat(input.getAttribute('data-price'));
+        const maxQuantity = products[index].quantity;
 
-            if (quantity > 0) {
-                const li = document.createElement('li');
-                li.textContent = `${products[index].productname} (${products[index].brandname}) - Quantity: ${quantity}`;
-                selectedList.appendChild(li);
-                total += quantity * price;
-            }
-        });
+        if (quantity > maxQuantity) {
+            alert(`You cannot buy more than ${maxQuantity} units of ${products[index].productname}.`);
+            input.value = maxQuantity;
+            quantity = maxQuantity;
+        }
 
-        document.getElementById('total').textContent = total.toFixed(2);
-        updateChangeDisplay();
-    }
+        if (quantity > 0) {
+            const li = document.createElement('li');
+            li.textContent = `${products[index].productname} (${products[index].brandname}) - Quantity: ${quantity}`;
+            selectedList.appendChild(li);
+            total += quantity * price;
+        }
+    });
+
+    document.getElementById('total').textContent = total.toFixed(2);
+    updateChangeDisplay();
+}
 
     function updateChangeDisplay() {
         const total = parseFloat(document.getElementById('total').textContent);
