@@ -102,12 +102,10 @@
         </ul>
     </div>
 
-<!-- Replace the entire <script> section in your HTML with this updated one -->
-
 <script>
     let products = [];
 
-    fetch('https://flask-on-render-17g8.onrender.com/api/data')
+    fetch('https://flask-on-render-17g8.onrender.com/products')
         .then(response => response.json())
         .then(data => {
             products = data;
