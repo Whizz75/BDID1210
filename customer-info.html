@@ -23,6 +23,32 @@
             font-size: 16px;
         }
 
+        .payment-box {
+            margin: 30px auto;
+            display: inline-block;
+            text-align: left;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .payment-option img {
+            width: 30px;
+            height: 30px;
+            margin: 0 10px;
+        }
+
+        .payment-option input[type="radio"] {
+            margin-right: 10px;
+        }
+
         button {
             padding: 10px 20px;
             background-color: #257db3;
@@ -39,8 +65,29 @@
 <body>
 
     <h2>Enter Customer Name</h2>
-
     <input type="text" id="customerName" placeholder="Customer Name" />
+
+    <div class="payment-box">
+        <h3>Select Payment Method</h3>
+
+        <div class="payment-option">
+            <input type="radio" name="payment" id="card" value="card">
+            <img src="credit-card.png" alt="Card Logo">
+            <label for="card">Credit / Debit Card</label>
+        </div>
+
+        <div class="payment-option">
+            <input type="radio" name="payment" id="paypal" value="paypal">
+            <img src="paypal.png" alt="PayPal Logo">
+            <label for="paypal">PayPal</label>
+        </div>
+
+        <div class="payment-option">
+            <input type="radio" name="payment" id="mpesa" value="mpesa">
+            <img src="mpesa.png" alt="Mpesa Logo">
+            <label for="mpesa">M-Pesa</label>
+        </div>
+    </div>
 
     <br>
 
@@ -49,17 +96,24 @@
     <script>
         function goToReceipt() {
             const customerName = document.getElementById('customerName').value.trim();
+            const selectedPayment = document.querySelector('input[name="payment"]:checked');
 
             if (!customerName) {
                 alert('Please enter the customer name.');
                 return;
             }
 
+            if (!selectedPayment) {
+                alert('Please select a payment method.');
+                return;
+            }
+
             localStorage.setItem('customerName', customerName);
+            localStorage.setItem('paymentMethod', selectedPayment.value);
+
             window.location.href = 'receipt.html';
         }
 
-        // Allow pressing Enter to submit
         document.getElementById('customerName').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 goToReceipt();
