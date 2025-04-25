@@ -1,129 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Financial Records</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
+  <meta charset="UTF-8">
+  <title>Financial Records</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
 
-        h1 {
-            text-align: center;
-        }
+    h1 {
+      text-align: center;
+      color: #0a0f3c;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
 
-        th, td {
-            border: 1px solid #ccc;
-            padding: 12px;
-            text-align: center;
-        }
+    th, td {
+      padding: 16px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
 
-        th {
-            background-color: #f1f1f1;
-        }
+    th {
+      background-color: #0a0f3c;
+      color: #fff;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
 
-        .section-header {
-            background-color: #004080;
-            color: white;
-            font-weight: bold;
-            text-align: left;
-            padding-left: 10px;
-        }
+    .section-header {
+      background-color: #f0c040;
+      color: #0a0f3c;
+      font-weight: bold;
+      text-align: left;
+      padding-left: 20px;
+      font-size: 1.1rem;
+    }
 
-        .category-row {
-            background-color: #f9f9f9;
-            font-weight: bold;
-            text-align: left;
-            padding-left: 10px;
-        }
-    </style>
+    .category-row {
+      background-color: #f9f9f9;
+      text-align: left;
+      font-weight: 600;
+      padding-left: 20px;
+    }
+
+    tr:hover td {
+      background-color: #fdf7e4;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Financial Records</h1>
+  <h1>Financial Records</h1>
 
-<table id="financial-table">
+  <table id="financial-table">
     <thead>
-        <tr>
-            <th>Financial Statements</th>
-            <th>2020</th>
-            <th>2021</th>
-            <th>2022</th>
-            <th>2023</th>
-            <th>2024</th>
-        </tr>
+      <tr>
+        <th>Financial Statements</th>
+        <th>2020</th>
+        <th>2021</th>
+        <th>2022</th>
+        <th>2023</th>
+        <th>2024</th>
+      </tr>
     </thead>
     <tbody>
-        <!-- Dynamic rows will be inserted here -->
+      <!-- Dynamic content gets inserted here -->
     </tbody>
-</table>
+  </table>
 
-<script>
+  <script>
     async function loadFinancialData() {
-        try {
-            const response = await fetch('http://localhost:5000/records');
-            const data = await response.json();
+      try {
+        const res = await fetch('http://localhost:5000/records');
+        const data = await res.json();
 
-            // Create a year-to-record mapping for easier access
-            const yearMap = {};
-            data.forEach(record => {
-                yearMap[record.Year] = record;
-            });
+        const yearMap = {};
+        data.forEach(record => {
+          yearMap[record.Year] = record;
+        });
 
-            const tbody = document.querySelector('#financial-table tbody');
+        const tbody = document.querySelector('#financial-table tbody');
 
-            // ========== Income Statement Section ==========
-            tbody.innerHTML += `<tr><td colspan="6" class="section-header">Income Statement</td></tr>`;
-            tbody.innerHTML += createRow('Revenue', yearMap, 'IncomeStatement', 'Revenue');
-            tbody.innerHTML += createRow('Cost of Goods Sold', yearMap, 'IncomeStatement', 'CostOfGoodsSold');
-            tbody.innerHTML += createRow('Gross Profit', yearMap, 'IncomeStatement', 'GrossProfit');
-            tbody.innerHTML += createRow('Total Expenses', yearMap, 'IncomeStatement', 'TotalExpenses');
-            tbody.innerHTML += createRow('Earnings Before Tax', yearMap, 'IncomeStatement', 'EarningsBeforeTax');
-            tbody.innerHTML += createRow('Taxes', yearMap, 'IncomeStatement', 'Taxes');
-            tbody.innerHTML += createRow('Net Profit', yearMap, 'IncomeStatement', 'NetProfit');
+        // Income Statement
+        tbody.innerHTML += `<tr><td colspan="6" class="section-header">Income Statement</td></tr>`;
+        tbody.innerHTML += createRow('Revenue', yearMap, 'IncomeStatement', 'Revenue');
+        tbody.innerHTML += createRow('Cost of Goods Sold', yearMap, 'IncomeStatement', 'CostOfGoodsSold');
+        tbody.innerHTML += createRow('Gross Profit', yearMap, 'IncomeStatement', 'GrossProfit');
+        tbody.innerHTML += createRow('Total Expenses', yearMap, 'IncomeStatement', 'TotalExpenses');
+        tbody.innerHTML += createRow('Earnings Before Tax', yearMap, 'IncomeStatement', 'EarningsBeforeTax');
+        tbody.innerHTML += createRow('Taxes', yearMap, 'IncomeStatement', 'Taxes');
+        tbody.innerHTML += createRow('Net Profit', yearMap, 'IncomeStatement', 'NetProfit');
 
-            // ========== Balance Sheet Section ==========
-            tbody.innerHTML += `<tr><td colspan="6" class="section-header">Balance Sheet</td></tr>`;
-            tbody.innerHTML += createRow('Cash', yearMap, 'BalanceSheet', 'Cash');
-            tbody.innerHTML += createRow('Debt', yearMap, 'BalanceSheet', 'Debt');
-            tbody.innerHTML += createRow('Equity Capital', yearMap, 'BalanceSheet', 'EquityCapital');
-            tbody.innerHTML += createRow('Retained Earnings', yearMap, 'BalanceSheet', 'RetainedEarnings');
-            tbody.innerHTML += createRow('Total Shareholders Equity', yearMap, 'BalanceSheet', 'TotalShareholdersEquity');
+        // Balance Sheet
+        tbody.innerHTML += `<tr><td colspan="6" class="section-header">Balance Sheet</td></tr>`;
+        tbody.innerHTML += createRow('Cash', yearMap, 'BalanceSheet', 'Cash');
+        tbody.innerHTML += createRow('Debt', yearMap, 'BalanceSheet', 'Debt');
+        tbody.innerHTML += createRow('Equity Capital', yearMap, 'BalanceSheet', 'EquityCapital');
+        tbody.innerHTML += createRow('Retained Earnings', yearMap, 'BalanceSheet', 'RetainedEarnings');
+        tbody.innerHTML += createRow('Total Shareholders Equity', yearMap, 'BalanceSheet', 'TotalShareholdersEquity');
 
-            // ========== Cash Flow Statement Section ==========
-            tbody.innerHTML += `<tr><td colspan="6" class="section-header">Cash Flow Statement</td></tr>`;
-            tbody.innerHTML += createRow('Net Earnings', yearMap, 'CashFlowStatement', 'NetEarnings');
-            tbody.innerHTML += createRow('Cash from Operations', yearMap, 'CashFlowStatement', 'CashFromOperations');
-            tbody.innerHTML += createRow('Investment in Property & Equipment', yearMap, 'CashFlowStatement', 'InvestmentInPropertyAndEquipment');
-            tbody.innerHTML += createRow('Cash from Investing', yearMap, 'CashFlowStatement', 'CashFromInvesting');
-            tbody.innerHTML += createRow('Net Cash Change', yearMap, 'CashFlowStatement', 'NetCashChange');
-            tbody.innerHTML += createRow('Opening Cash Balance', yearMap, 'CashFlowStatement', 'OpeningCashBalance');
-            tbody.innerHTML += createRow('Closing Cash Balance', yearMap, 'CashFlowStatement', 'ClosingCashBalance');
+        // Cash Flow Statement
+        tbody.innerHTML += `<tr><td colspan="6" class="section-header">Cash Flow Statement</td></tr>`;
+        tbody.innerHTML += createRow('Net Earnings', yearMap, 'CashFlowStatement', 'NetEarnings');
+        tbody.innerHTML += createRow('Cash from Operations', yearMap, 'CashFlowStatement', 'CashFromOperations');
+        tbody.innerHTML += createRow('Investment in Property & Equipment', yearMap, 'CashFlowStatement', 'InvestmentInPropertyAndEquipment');
+        tbody.innerHTML += createRow('Cash from Investing', yearMap, 'CashFlowStatement', 'CashFromInvesting');
+        tbody.innerHTML += createRow('Net Cash Change', yearMap, 'CashFlowStatement', 'NetCashChange');
+        tbody.innerHTML += createRow('Opening Cash Balance', yearMap, 'CashFlowStatement', 'OpeningCashBalance');
+        tbody.innerHTML += createRow('Closing Cash Balance', yearMap, 'CashFlowStatement', 'ClosingCashBalance');
 
-        } catch (error) {
-            console.error("Error fetching financial data:", error);
-        }
+      } catch (err) {
+        console.error("Error loading data:", err);
+      }
     }
 
-    function createRow(label, yearMap, section, field) {
-        let row = `<tr><td class="category-row">${label}</td>`;
-        for (let year = 2020; year <= 2024; year++) {
-            const value = yearMap[year]?.[section]?.[field];
-            row += `<td>${value !== undefined ? value : '-'}</td>`;
-        }
-        row += `</tr>`;
-        return row;
+    function createRow(label, map, section, field) {
+      let row = `<tr><td class="category-row">${label}</td>`;
+      for (let y = 2020; y <= 2024; y++) {
+        const value = map[y]?.[section]?.[field];
+        row += `<td>${value !== undefined ? value : '-'}</td>`;
+      }
+      row += `</tr>`;
+      return row;
     }
 
     loadFinancialData();
-</script>
+  </script>
 
 </body>
 </html>
