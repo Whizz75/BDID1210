@@ -175,7 +175,7 @@
         const payment = parseFloat(document.getElementById('payment').value) || 0;
         const change = payment - total;
 
-        document.getElementById('change').textContent = change >= 0 ? change.toFixed(2) : 'Insufficient payment';
+        document.getElementById('change').textContent = change >= 0 ? change.toFixed(2) : ' Insufficient payment';
     }
 
     document.getElementById('payment').addEventListener('input', updateChangeDisplay);
