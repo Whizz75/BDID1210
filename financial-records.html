@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Statements</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2C3E50;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .table-container {
+            margin-bottom: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #2980b9;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            background-color: #ecf0f1;
+        }
+        tr:nth-child(even) td {
+            background-color: #f9fafb;
+        }
+        tr:nth-child(odd) td {
+            background-color: #ffffff;
+        }
+        tr:hover td {
+            background-color: #f1c40f;
+            color: white;
+        }
+        .highlight {
+            background-color: #f39c12;
+            color: white;
+        }
+        .loading {
+            text-align: center;
+            font-size: 18px;
+            color: #2980b9;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        .api-error {
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Financial Statements</h1>
+
+    <!-- Income Statement Table -->
+    <div class="table-container" id="income-statement">
+        <h2>Income Statement</h2>
+        <div class="loading" id="loading-income">Loading...</div>
+        <table id="income-table">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Revenue</th>
+                    <th>COGS</th>
+                    <th>Gross Profit</th>
+                    <th>Total Expenses</th>
+                    <th>EBT</th>
+                    <th>Taxes</th>
+                    <th>Net Profit</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Balance Sheet Table -->
+    <div class="table-container" id="balance-sheet">
+        <h2>Balance Sheet</h2>
+        <div class="loading" id="loading-balance">Loading...</div>
+        <table id="balance-table">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Cash</th>
+                    <th>Debt</th>
+                    <th>Equity Capital</th>
+                    <th>Retained Earnings</th>
+                    <th>Total Equity</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Cash Flow Statement Table -->
+    <div class="table-container" id="cash-flow">
+        <h2>Cash Flow Statement</h2>
+        <div class="loading" id="loading-cashflow">Loading...</div>
+        <table id="cashflow-table">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Net Earnings</th>
+                    <th>Cash from Operations</th>
+                    <th>Investments</th>
+                    <th>Cash from Investing</th>
+                    <th>Net Cash Change</th>
+                    <th>Opening Cash</th>
+                    <th>Closing Cash</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Financial Records Table -->
+    <div class="table-container" id="financial-records">
+        <h2>Financial Records</h2>
+        <div class="loading" id="loading-records">Loading...</div>
+        <table id="records-table">
+            <thead>
+                <tr>
+                    <th>Record ID</th>
+                    <th>Year</th>
+                    <th>Sales ID</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Your Company | All Rights Reserved</p>
+    </div>
+</div>
+
+<!-- JavaScript for Fetching API Data -->
+<script>
+    const fetchData = async (url, elementId, loadingId) => {
+        try {
+            document.getElementById(loadingId).style.display = "block";
+            const response = await fetch(url);
+            const data = await response.json();
+            document.getElementById(loadingId).style.display = "none";
+            if (data && data.length > 0) {
+                populateTable(data, elementId);
+            } else {
+                document.getElementById(elementId).innerHTML = `<tr><td colspan="8" class="api-error">No data available</td></tr>`;
+            }
+        } catch (error) {
+            document.getElementById(loadingId).style.display = "none";
+            document.getElementById(elementId).innerHTML = `<tr><td colspan="8" class="api-error">Error loading data</td></tr>`;
+        }
+    };
+
+    const populateTable = (data, tableId) => {
+        let tableContent = '';
+        data.forEach(row => {
+            tableContent += `
+                <tr>
+                    <td>${row.Year}</td>
+                    <td>${row.revenue || row.cash || row.net_earnings || row.record_id}</td>
+                    <td>${row.cost_of_goods_sold || row.debt || row.cash_from_operations || ''}</td>
+                    <td>${row.gross_profit || row.equity_capital || row.investment_in_property_and_equipment || ''}</td>
+                    <td>${row.total_expenses || row.retained_earnings || row.cash_from_investing || ''}</td>
+                    <td>${row.earnings_before_tax || row.total_shareholders_equity || row.net_cash_change || ''}</td>
+                    <td>${row.taxes || row.opening_cash_balance || ''}</td>
+                    <td>${row.net_profit || row.closing_cash_balance || ''}</td>
+                </tr>
+            `;
+        });
+        document.querySelector(`#${tableId} tbody`).innerHTML = tableContent;
+    };
+
+    // Replace these URLs with your actual API endpoints
+    fetchData('your-api-endpoint/incomeStatement', 'income-table', 'loading-income');
+    fetchData('your-api-endpoint/balanceSheet', 'balance-table', 'loading-balance');
+    fetchData('your-api-endpoint/cashFlowStatement', 'cashflow-table', 'loading-cashflow');
+    fetchData('your-api-endpoint/financialRecords', 'records-table', 'loading-records');
+</script>
+
+</body>
+</html>
