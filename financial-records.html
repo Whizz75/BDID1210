@@ -7,18 +7,18 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
+            background-color: #e3f2fd;
             margin: 0;
             padding: 20px;
         }
         h1, h2 {
             text-align: center;
-            color: #2C3E50;
+            color: #0d47a1;
         }
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background-color: white;
+            background-color: #ffffff;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -39,38 +39,38 @@
             border-bottom: 1px solid #ddd;
         }
         th {
-            background-color: #2980b9;
+            background-color: #1976d2;
             color: #fff;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         td {
-            background-color: #ecf0f1;
+            background-color: #bbdefb;
         }
         tr:nth-child(even) td {
-            background-color: #f9fafb;
+            background-color: #e3f2fd;
         }
         tr:nth-child(odd) td {
             background-color: #ffffff;
         }
         tr:hover td {
-            background-color: #f1c40f;
+            background-color: #0288d1;
             color: white;
         }
         .highlight {
-            background-color: #f39c12;
+            background-color: #0288d1;
             color: white;
         }
         .loading {
             text-align: center;
             font-size: 18px;
-            color: #2980b9;
+            color: #0288d1;
         }
         .footer {
             text-align: center;
             margin-top: 60px;
             font-size: 14px;
-            color: #7f8c8d;
+            color: #616161;
         }
         .api-error {
             color: red;
@@ -187,7 +187,7 @@
     const populateTable = (data, tableId) => {
         let tableContent = '';
         data.forEach(row => {
-            tableContent += `
+            tableContent += ` 
                 <tr>
                     <td>${row.Year}</td>
                     <td>${row.revenue || row.cash || row.net_earnings || row.record_id}</td>
