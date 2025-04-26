@@ -64,15 +64,15 @@
       .then(response => response.json())
       .then(data => {
         const tbody = document.getElementById('salesData');
-        data.forEach(sales => {
+        data.forEach(row => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td>${sales.salesid}</td>
-            <td>${sales.customerfirstname}</td>
-            <td>${sales.employeefirstname}</td>
-            <td>${sales.productname}</td>
+            <td>${row.salesid}</td>
+            <td>${row.customerfirstname}</td>
+            <td>${row.employeefirstname}</td>
+            <td>${row.productname}</td>
             <td>${new Date(row.sales_date).toLocaleDateString()}</td>
-            <td>M ${parseFloat(sales.revenue).toFixed(2)}</td>
+            <td>M ${parseFloat(row.revenue).toFixed(2)}</td>
           `;
           tbody.appendChild(tr);
         });
