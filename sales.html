@@ -69,9 +69,9 @@
           tr.innerHTML = `
             <td>${row.salesid}</td>
             <td>${row.customername}</td>
-            <td>${row.employeename}</td>
-            <td>${row.productname}</td>
-            <td>${new Date(row.dateofpurchase).toLocaleDateString()}</td>
+            <td>${row.employee}</td>
+            <td>${row.product}</td>
+            <td>${new Date(row.sales_date).toLocaleDateString()}</td>
             <td>M ${parseFloat(row.totalamount).toFixed(2)}</td>
           `;
           tbody.appendChild(tr);
