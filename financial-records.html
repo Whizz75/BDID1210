@@ -92,7 +92,7 @@
   <script>
     async function fetchDataAndDisplay() {
   try {
-    const response = await fetch('http://127.0.0.1:5000/api/financials');
+    const response = await fetch('https://flask-on-render-17g8.onrender.com/records/by-year');
     const data = await response.json();
     const yearMap = {};
 
