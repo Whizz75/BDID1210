@@ -85,7 +85,7 @@
   <script>
     async function loadFinancialData() {
       try {
-        const res = await fetch('http://localhost:5000/records');
+        const res = await fetch('https://flask-on-render-17g8.onrender.com/records/by-year');
         const data = await res.json();
 
         const yearMap = {};
