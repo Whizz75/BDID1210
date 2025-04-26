@@ -71,7 +71,7 @@
 
   <script>
     const correctUsername = "motzadmin";
-    const correctPassword = "qwerty123456";
+    const correctPassword = "tyres2024";
 
     function login() {
       const user = document.getElementById('username').value;
@@ -79,11 +79,18 @@
       const errorBox = document.getElementById('errorMsg');
 
       if (user === correctUsername && pass === correctPassword) {
-        window.location.href = "finances.html";  // your finance page file
+        window.location.href = "finances.html"; // update this if needed
       } else {
         errorBox.textContent = "Incorrect username or password. Try again.";
       }
     }
+
+    // Trigger login on Enter key
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        login();
+      }
+    });
   </script>
 
 </body>
