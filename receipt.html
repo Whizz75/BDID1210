@@ -20,8 +20,7 @@
             border: 1px solid #ccc;
             padding: 20px;
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: auto;
             background-color: #fff;
         }
 
@@ -78,13 +77,12 @@
     </style>
 </head>
 
+<body>
     <div style="text-align: center;">
         <a href="https://tickets.formula1.com/en/f1-56257-qatar">
             <img src="images/F1 Banner.png" alt="Banner">
         </a>
     </div>
-    
-<body>
 
     <div class="receipt-box">
         <div class="receipt-title">
@@ -95,6 +93,7 @@
         <div class="receipt-details">
             <p><strong>Customer Name:</strong> <span id="customer-name"></span></p>
             <p><strong>Date:</strong> <span id="current-date"></span></p>
+            <p><strong>Payment Method:</strong> <span id="payment-method"></span></p>
         </div>
 
         <table id="receipt-table">
@@ -129,38 +128,51 @@
         const payment = parseFloat(localStorage.getItem('payment') || '0');
         const change = payment - total;
         const customerName = localStorage.getItem('customerName') || 'N/A';
+        const paymentMethod = localStorage.getItem('paymentMethod') || 'N/A';
 
-        // Set customer name
         document.getElementById('customer-name').textContent = customerName;
+        document.getElementById('payment-method').textContent = paymentMethod;
 
-        // Generate invoice code
+        // Generate or retrieve invoice code
         function generateInvoiceCode() {
             return 'INV' + Math.random().toString(36).substr(2, 9).toUpperCase();
         }
 
-        // Set invoice code and date
-        document.getElementById('invoice-code').textContent = generateInvoiceCode();
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString();
+        const invoiceCode = localStorage.getItem('invoiceCode') || generateInvoiceCode();
+        localStorage.setItem('invoiceCode', invoiceCode);
+        document.getElementById('invoice-code').textContent = invoiceCode;
+
+        // Set formatted date
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
 
         // Populate table
         const tableBody = document.querySelector('#receipt-table tbody');
-        selectedProducts.forEach(product => {
+        if (selectedProducts.length === 0) {
             const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${product.productname}</td>
-                <td>${product.brandname}</td>
-                <td>${product.quantity}</td>
-                <td>${product.sellingprice}</td>
-                <td>${(product.quantity * product.sellingprice).toFixed(2)}</td>
-            `;
+            row.innerHTML = `<td colspan="5" style="text-align:center;">No products found in receipt.</td>`;
             tableBody.appendChild(row);
-        });
+        } else {
+            selectedProducts.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.productname}</td>
+                    <td>${product.brandname}</td>
+                    <td>${product.quantity}</td>
+                    <td>M${parseFloat(product.sellingprice).toFixed(2)}</td>
+                    <td>M${(product.quantity * product.sellingprice).toFixed(2)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
 
         // Show totals
         document.getElementById('receipt-total').textContent = total.toFixed(2);
         document.getElementById('receipt-payment').textContent = payment.toFixed(2);
         document.getElementById('receipt-change').textContent = change >= 0 ? change.toFixed(2) : 'Insufficient payment';
     </script>
-
 </body>
 </html>
