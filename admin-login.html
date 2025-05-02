@@ -59,7 +59,16 @@
   </style>
 </head>
 <body>
-
+  
+  <div style="text-align: center;">
+    <p>
+      As this is a section reserved for supervisors please enter your credentials to 
+    </p>
+    <p>
+      validate your position.
+    </p>
+  </div>
+  
   <div class="login-box">
     <h1>Motz Auto & Tyres</h1>
     <h2>Finance Portal Login</h2>
@@ -79,13 +88,12 @@
       const errorBox = document.getElementById('errorMsg');
 
       if (user === correctUsername && pass === correctPassword) {
-        window.location.href = "finances.html"; // update this if needed
+        window.location.href = "finances.html";
       } else {
         errorBox.textContent = "Incorrect username or password. Try again.";
       }
     }
 
-    // Trigger login on Enter key
     document.addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
         login();
