@@ -109,32 +109,62 @@
     <button onclick="goToReceipt()">Continue to Receipt</button>
 
     <script>
-        function goToReceipt() {
-            const customerName = document.getElementById('customerName').value.trim();
-            const selectedPayment = document.querySelector('input[name="payment"]:checked');
+    const API_BASE_URL = 'https://your-api-name.onrender.co'; // replace with your actual API URL
 
-            if (!customerName) {
-                alert('Please enter the customer name.');
-                return;
-            }
+    async function goToReceipt() {
+        const customerName = document.getElementById('customerName').value.trim();
+        const selectedPayment = document.querySelector('input[name="payment"]:checked');
 
-            if (!selectedPayment) {
-                alert('Please select a payment method.');
-                return;
-            }
-
-            localStorage.setItem('customerName', customerName);
-            localStorage.setItem('paymentMethod', selectedPayment.value);
-
-            window.location.href = 'receipt.html';
+        if (!customerName) {
+            alert('Please enter the customer name.');
+            return;
         }
 
-        document.getElementById('customerName').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                goToReceipt();
-            }
-        });
-    </script>
+        if (!selectedPayment) {
+            alert('Please select a payment method.');
+            return;
+        }
+
+        // Get product data from localStorage (assuming it's stored there after selection)
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        try {
+            // Step 1: Update quantities in database
+            await fetch(`${API_BASE_URL}/purchase`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(cart)
+            });
+
+            // Step 2: Record the sale
+            await fetch(`${API_BASE_URL}/sales`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    customer_name: customerName,
+                    payment_method: selectedPayment.value,
+                    items: cart
+                })
+            });
+
+            // Step 3: Save info locally and redirect
+            localStorage.setItem('customerName', customerName);
+            localStorage.setItem('paymentMethod', selectedPayment.value);
+            window.location.href = 'receipt.html';
+
+        } catch (error) {
+            console.error('Error processing sale:', error);
+            alert('Something went wrong. Please try again.');
+        }
+    }
+
+    document.getElementById('customerName').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            goToReceipt();
+        }
+    });
+</script>
+
 
 </body>
 </html>
