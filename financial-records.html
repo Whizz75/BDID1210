@@ -116,31 +116,31 @@
 
     // Income Statement
     tbody.innerHTML += `<tr><td colspan="6" class="section-header">Income Statement</td></tr>`;
-    tbody.innerHTML += createRow('Revenue', yearMap, 'Revenue');
-    tbody.innerHTML += createRow('Cost of Goods Sold', yearMap, 'CostOfGoodsSold');
-    tbody.innerHTML += createRow('Gross Profit', yearMap, 'GrossProfit');
-    tbody.innerHTML += createRow('Total Expenses', yearMap, 'TotalExpenses');
-    tbody.innerHTML += createRow('Earnings Before Tax', yearMap, 'EarningsBeforeTax');
-    tbody.innerHTML += createRow('Taxes', yearMap, 'Taxes');
-    tbody.innerHTML += createRow('Net Profit', yearMap, 'NetProfit');
+    tbody.innerHTML += createRow('Revenue(LSL)', yearMap, 'Revenue');
+    tbody.innerHTML += createRow('Cost of Goods Sold(LSL)', yearMap, 'CostOfGoodsSold');
+    tbody.innerHTML += createRow('Gross Profit(LSL)', yearMap, 'GrossProfit');
+    tbody.innerHTML += createRow('Total Expenses(LSL)', yearMap, 'TotalExpenses');
+    tbody.innerHTML += createRow('Earnings Before Tax(LSL)', yearMap, 'EarningsBeforeTax');
+    tbody.innerHTML += createRow('Taxes(LSL)', yearMap, 'Taxes');
+    tbody.innerHTML += createRow('Net Profit(LSL)', yearMap, 'NetProfit');
 
     // Balance Sheet
     tbody.innerHTML += `<tr><td colspan="6" class="section-header">Balance Sheet</td></tr>`;
-    tbody.innerHTML += createRow('Cash', yearMap, 'Cash');
-    tbody.innerHTML += createRow('Debt', yearMap, 'Debt');
-    tbody.innerHTML += createRow('Equity Capital', yearMap, 'EquityCapital');
-    tbody.innerHTML += createRow('Retained Earnings', yearMap, 'RetainedEarnings');
-    tbody.innerHTML += createRow('Total Shareholders Equity', yearMap, 'TotalShareholdersEquity');
+    tbody.innerHTML += createRow('Cash(LSL)', yearMap, 'Cash');
+    tbody.innerHTML += createRow('Debt(LSL)', yearMap, 'Debt');
+    tbody.innerHTML += createRow('Equity Capital(LSL)', yearMap, 'EquityCapital');
+    tbody.innerHTML += createRow('Retained Earnings(LSL)', yearMap, 'RetainedEarnings');
+    tbody.innerHTML += createRow('Total Shareholders Equity(LSL)', yearMap, 'TotalShareholdersEquity');
 
     // Cash Flow Statement
     tbody.innerHTML += `<tr><td colspan="6" class="section-header">Cash Flow Statement</td></tr>`;
-    tbody.innerHTML += createRow('Net Earnings', yearMap, 'NetEarnings');
-    tbody.innerHTML += createRow('Cash from Operations', yearMap, 'CashFromOperations');
-    tbody.innerHTML += createRow('Investment in Property & Equipment', yearMap, 'InvestmentInPropertyAndEquipment');
-    tbody.innerHTML += createRow('Cash from Investing', yearMap, 'CashFromInvesting');
-    tbody.innerHTML += createRow('Net Cash Change', yearMap, 'NetCashChange');
-    tbody.innerHTML += createRow('Opening Cash Balance', yearMap, 'OpeningCashBalance');
-    tbody.innerHTML += createRow('Closing Cash Balance', yearMap, 'ClosingCashBalance');
+    tbody.innerHTML += createRow('Net Earnings(LSL)', yearMap, 'NetEarnings');
+    tbody.innerHTML += createRow('Cash from Operations(LSL)', yearMap, 'CashFromOperations');
+    tbody.innerHTML += createRow('Investment in Property & Equipment(LSL)', yearMap, 'InvestmentInPropertyAndEquipment');
+    tbody.innerHTML += createRow('Cash from Investing(LSL)', yearMap, 'CashFromInvesting');
+    tbody.innerHTML += createRow('Net Cash Change(LSL)', yearMap, 'NetCashChange');
+    tbody.innerHTML += createRow('Opening Cash Balance(LSL)', yearMap, 'OpeningCashBalance');
+    tbody.innerHTML += createRow('Closing Cash Balance(LSL)', yearMap, 'ClosingCashBalance');
 
   } catch (error) {
     console.error('Error fetching or displaying data:', error);
