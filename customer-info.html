@@ -84,6 +84,9 @@
     <h2>Enter Customer Name</h2>
     <input type="text" id="customerName" placeholder="Customer Name" />
 
+    <h2>Enter Employee ID (1–15)</h2>
+    <input type="number" id="employeeId" placeholder="Employee ID" min="1" max="15" />
+
     <!-- Payment Options -->
     <div class="payment-box">
         <h3>Select Payment Method</h3>
@@ -115,10 +118,16 @@
 
         async function goToReceipt() {
             const customerName = document.getElementById('customerName').value.trim();
+            const employeeId = parseInt(document.getElementById('employeeId').value.trim());
             const selectedPayment = document.querySelector('input[name="payment"]:checked');
 
             if (!customerName) {
                 alert('Please enter the customer name.');
+                return;
+            }
+
+            if (isNaN(employeeId) || employeeId < 1 || employeeId > 15) {
+                alert('Please enter a valid Employee ID between 1 and 15.');
                 return;
             }
 
@@ -144,6 +153,7 @@
                     body: JSON.stringify({
                         customer_name: customerName,
                         payment_method: selectedPayment.value,
+                        employee_id: employeeId,
                         items: cart
                     })
                 });
@@ -151,6 +161,7 @@
                 // Step 3: Save locally and redirect
                 localStorage.setItem('customerName', customerName);
                 localStorage.setItem('paymentMethod', selectedPayment.value);
+                localStorage.setItem('employeeId', employeeId.toString());
                 window.location.href = 'receipt.html';
 
             } catch (error) {
