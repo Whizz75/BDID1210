@@ -91,7 +91,9 @@
         </div>
 
         <div class="receipt-details">
-            <p><strong>Customer Name:</strong> <span id="customer-name"></span></p>
+            <p><strong>Customer Name:</strong> <span id="receiptCustomerName"></span></p>
+            <p><strong>Payment Method:</strong> <span id="receiptPaymentMethod"></span></p>
+            <p><strong>Employee ID:</strong> <span id="receiptEmployeeId"></span></p>
             <p><strong>Date:</strong> <span id="current-date"></span></p>
             <p><strong>Payment Method:</strong> <span id="payment-method"></span></p>
         </div>
@@ -130,8 +132,10 @@
         const customerName = localStorage.getItem('customerName') || 'N/A';
         const paymentMethod = localStorage.getItem('paymentMethod') || 'N/A';
 
-        document.getElementById('customer-name').textContent = customerName;
-        document.getElementById('payment-method').textContent = paymentMethod;
+        document.getElementById('receiptCustomerName').textContent = localStorage.getItem('customerName') || 'N/A';
+        document.getElementById('receiptPaymentMethod').textContent = localStorage.getItem('paymentMethod') || 'N/A';
+        document.getElementById('receiptEmployeeId').textContent = localStorage.getItem('employeeId') || 'N/A';
+
 
         // Generate or retrieve invoice code
         function generateInvoiceCode() {
