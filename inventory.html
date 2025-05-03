@@ -64,7 +64,7 @@
     .then(data => {
       const tbody = document.getElementById('inventoryData');
       tbody.innerHTML = ''; // Clear existing rows
-      data.forEach(sale => {
+      data.forEach(inventory => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${inventory.inventoryid}</td>
