@@ -62,7 +62,7 @@
   fetch('https://flask-on-render-17g8.onrender.com/inventory')
     .then(res => res.json())
     .then(data => {
-      const tbody = document.getElementById('salesData');
+      const tbody = document.getElementById('inventoryData');
       tbody.innerHTML = ''; // Clear existing rows
       data.forEach(sale => {
         const row = document.createElement('tr');
