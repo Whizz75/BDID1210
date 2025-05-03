@@ -11,19 +11,16 @@
             background-color: #f0f8ff;
             text-align: center;
         }
-
         h2 {
             color: #257db3;
         }
-
-        input[type="text"] {
+        input[type="text"], input[type="number"] {
             padding: 10px;
             width: 250px;
             margin: 20px auto;
             font-size: 16px;
             display: block;
         }
-
         .payment-box {
             margin: 30px auto;
             background-color: #fff;
@@ -35,29 +32,24 @@
             flex-direction: column;
             align-items: flex-start;
         }
-
         .payment-box h3 {
             margin-top: 0;
             text-align: left;
             width: 100%;
         }
-
         .payment-option {
             display: flex;
             align-items: center;
             margin-bottom: 15px;
         }
-
         .payment-option img {
             width: 30px;
             height: 30px;
             margin: 0 10px;
         }
-
         .payment-option input[type="radio"] {
             margin-right: 10px;
         }
-
         button {
             padding: 10px 20px;
             background-color: #257db3;
@@ -66,7 +58,6 @@
             cursor: pointer;
             margin-top: 20px;
         }
-
         button:hover {
             background-color: #1a5d87;
         }
@@ -75,7 +66,7 @@
 <body>
 
     <!-- Banner -->
-    <div style="text-align: center;">
+    <div>
         <a href="https://www.24h-lemans.com/en/tickets">
             <img src="images/leaderboard.png" alt="Banner">
         </a>
@@ -113,33 +104,15 @@
     <!-- Continue Button -->
     <button onclick="goToReceipt()">Continue to Receipt</button>
 
+    <!-- Script placed at the end -->
     <script>
         const API_BASE_URL = 'https://flask-on-render-17g8.onrender.com';
-
-// Step 1: Update quantities
-        await fetch(`${API_BASE_URL}/purchase`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(cart)
-        });
-
-// Step 2: Record sale
-        await fetch(`${API_BASE_URL}/sales`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                customer_name: customerName,
-                payment_method: selectedPayment.value,
-                employee_id: employeeId,
-                items: cart
-            })
-        });
-
 
         async function goToReceipt() {
             const customerName = document.getElementById('customerName').value.trim();
             const employeeId = parseInt(document.getElementById('employeeId').value.trim());
             const selectedPayment = document.querySelector('input[name="payment"]:checked');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
             if (!customerName) {
                 alert('Please enter the customer name.');
@@ -155,8 +128,6 @@
                 alert('Please select a payment method.');
                 return;
             }
-
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
             try {
                 // Step 1: Update quantities
