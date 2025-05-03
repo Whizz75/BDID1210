@@ -104,38 +104,39 @@
 
     <script>
 
-        async function goToReceipt() {
-            const customerName = document.getElementById('customerName').value.trim();
-            const employeeId = parseInt(document.getElementById('employeeId').value.trim());
-            const selectedPayment = document.querySelector('input[name="payment"]:checked');
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            async function goToReceipt() {
+                try {
+                    const customerName = document.getElementById('customerName').value.trim();
+                    const employeeId = parseInt(document.getElementById('employeeId').value.trim());
+                    const selectedPayment = document.querySelector('input[name="payment"]:checked');
+                    const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-            if (!customerName) {
-                alert('Please enter the customer name.');
-                return;
+                    if (!customerName) {
+                        alert('Please enter the customer name.');
+                        return;
+                    }
+
+                    if (isNaN(employeeId) || employeeId < 1 || employeeId > 15) {
+                        alert('Please enter a valid Employee ID between 1 and 15.');
+                        return;
+                    }
+
+                    if (!selectedPayment) {
+                        alert('Please select a payment method.');
+                        return;
+                    }
+
+                    localStorage.setItem('customerName', customerName);
+                    localStorage.setItem('paymentMethod', selectedPayment.value);
+                    localStorage.setItem('employeeId', employeeId.toString());
+                    window.location.href = 'receipt.html';
+
+                } catch (error) {
+                    console.error('Error processing sale:', error);
+                    alert('Something went wrong. Please try again.');
+                }
             }
-
-            if (isNaN(employeeId) || employeeId < 1 || employeeId > 15) {
-                alert('Please enter a valid Employee ID between 1 and 15.');
-                return;
-            }
-
-            if (!selectedPayment) {
-                alert('Please select a payment method.');
-                return;
-            }
-
             
-                localStorage.setItem('customerName', customerName);
-                localStorage.setItem('paymentMethod', selectedPayment.value);
-                localStorage.setItem('employeeId', employeeId.toString());
-                window.location.href = 'receipt.html';
-
-            } catch (error) {
-                console.error('Error processing sale:', error);
-                alert('Something went wrong. Please try again.');
-            }
-        }
         document.getElementById('customerName').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 goToReceipt();
