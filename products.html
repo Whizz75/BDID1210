@@ -124,7 +124,7 @@
         .then(response => response.json())
         .then(data => {
             products = data;
-            tableBody.innerHTML = ''; // Clear loading row
+            tableBody.innerHTML = ''; 
 
             data.forEach((product, index) => {
                 const row = document.createElement('tr');
