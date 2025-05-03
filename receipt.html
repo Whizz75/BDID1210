@@ -109,7 +109,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Products will load here -->
+                <!-- Products -->
             </tbody>
         </table>
 
@@ -137,7 +137,6 @@
         document.getElementById('receiptEmployeeId').textContent = localStorage.getItem('employeeId') || 'N/A';
 
 
-        // Generate or retrieve invoice code
         function generateInvoiceCode() {
             return 'INV' + Math.random().toString(36).substr(2, 9).toUpperCase();
         }
@@ -146,14 +145,12 @@
         localStorage.setItem('invoiceCode', invoiceCode);
         document.getElementById('invoice-code').textContent = invoiceCode;
 
-        // Set formatted date
         document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-GB', {
             day: '2-digit',
             month: 'short',
             year: 'numeric'
         });
 
-        // Populate table
         const tableBody = document.querySelector('#receipt-table tbody');
         if (selectedProducts.length === 0) {
             const row = document.createElement('tr');
@@ -173,7 +170,6 @@
             });
         }
 
-        // Show totals
         document.getElementById('receipt-total').textContent = total.toFixed(2);
         document.getElementById('receipt-payment').textContent = payment.toFixed(2);
         document.getElementById('receipt-change').textContent = change >= 0 ? change.toFixed(2) : 'Insufficient payment';
