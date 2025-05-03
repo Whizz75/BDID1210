@@ -65,7 +65,6 @@
 </head>
 <body>
 
-    <!-- Banner -->
     <div>
         <a href="https://www.24h-lemans.com/en/tickets">
             <img src="images/leaderboard.png" alt="Banner">
@@ -78,7 +77,7 @@
     <h2>Enter Employee ID (1–15)</h2>
     <input type="number" id="employeeId" placeholder="Employee ID" min="1" max="15" />
 
-    <!-- Payment Options -->
+    
     <div class="payment-box">
         <h3>Select Payment Method</h3>
 
@@ -101,12 +100,9 @@
         </div>
     </div>
 
-    <!-- Continue Button -->
     <button onclick="goToReceipt()">Continue to Receipt</button>
 
-    <!-- Script placed at the end -->
     <script>
-        const API_BASE_URL = 'https://flask-on-render-17g8.onrender.com';
 
         async function goToReceipt() {
             const customerName = document.getElementById('customerName').value.trim();
@@ -129,27 +125,7 @@
                 return;
             }
 
-            try {
-                // Step 1: Update quantities
-                await fetch(`${API_BASE_URL}/purchase`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(cart)
-                });
-
-                // Step 2: Record sale
-                await fetch(`${API_BASE_URL}/sales`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        customer_name: customerName,
-                        payment_method: selectedPayment.value,
-                        employee_id: employeeId,
-                        items: cart
-                    })
-                });
-
-                // Step 3: Save locally and redirect
+            
                 localStorage.setItem('customerName', customerName);
                 localStorage.setItem('paymentMethod', selectedPayment.value);
                 localStorage.setItem('employeeId', employeeId.toString());
@@ -160,8 +136,6 @@
                 alert('Something went wrong. Please try again.');
             }
         }
-
-        // Allow Enter key to submit
         document.getElementById('customerName').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 goToReceipt();
