@@ -85,7 +85,7 @@
     </tr>
   </thead>
   <tbody id="financials-table-body">
-    <!-- Dynamic content gets inserted here -->
+    <!-- Financial Records -->
   </tbody>
 </table>
 
@@ -96,7 +96,6 @@
     const data = await response.json();
     const yearMap = {};
 
-    // Group data by year
     data.forEach(entry => {
       yearMap[entry.Year] = entry;
     });
