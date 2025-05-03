@@ -55,7 +55,7 @@
         </tr>
       </thead>
     <tbody id="salesData">
-      <!-- Data will be inserted here by JavaScript -->
+      <!-- Sales Data -->
     </tbody>
     </table>
   </div>
@@ -65,7 +65,7 @@
     .then(res => res.json())
     .then(data => {
       const tbody = document.getElementById('salesData');
-      tbody.innerHTML = ''; // Clear existing rows
+      tbody.innerHTML = ''; 
       data.forEach(sale => {
         const row = document.createElement('tr');
         row.innerHTML = `
