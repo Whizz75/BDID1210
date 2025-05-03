@@ -114,7 +114,27 @@
     <button onclick="goToReceipt()">Continue to Receipt</button>
 
     <script>
-        const API_BASE_URL = 'https://flask-on-render-17g8.onrender.com/purchase'; // Replace with your actual API base URL
+        const API_BASE_URL = 'https://flask-on-render-17g8.onrender.com';
+
+// Step 1: Update quantities
+        await fetch(`${API_BASE_URL}/purchase`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(cart)
+        });
+
+// Step 2: Record sale
+        await fetch(`${API_BASE_URL}/sales`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                customer_name: customerName,
+                payment_method: selectedPayment.value,
+                employee_id: employeeId,
+                items: cart
+            })
+        });
+
 
         async function goToReceipt() {
             const customerName = document.getElementById('customerName').value.trim();
