@@ -95,7 +95,6 @@
             <p><strong>Payment Method:</strong> <span id="receiptPaymentMethod"></span></p>
             <p><strong>Employee ID:</strong> <span id="receiptEmployeeId"></span></p>
             <p><strong>Date:</strong> <span id="current-date"></span></p>
-            <p><strong>Payment Method:</strong> <span id="payment-method"></span></p>
         </div>
 
         <table id="receipt-table">
@@ -136,9 +135,9 @@
         document.getElementById('receiptPaymentMethod').textContent = localStorage.getItem('paymentMethod') || 'N/A';
         document.getElementById('receiptEmployeeId').textContent = localStorage.getItem('employeeId') || 'N/A';
 
-
+        // Generate a numeric invoice code (Sales ID)
         function generateInvoiceCode() {
-            return 'INV' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            return Math.floor(Math.random() * 1000000000); // Generate a random number for sales ID
         }
 
         const invoiceCode = localStorage.getItem('invoiceCode') || generateInvoiceCode();
@@ -159,7 +158,7 @@
         } else {
             selectedProducts.forEach(product => {
                 const row = document.createElement('tr');
-                row.innerHTML = `
+                row.innerHTML = ` 
                     <td>${product.productname}</td>
                     <td>${product.brandname}</td>
                     <td>${product.quantity}</td>
