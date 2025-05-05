@@ -53,7 +53,7 @@
         </tr>
       </thead>
     <tbody id="inventoryData">
-      <!-- Data will be inserted here by JavaScrpt -->
+      <!-- Inventory -->
     </tbody>
     </table>
   </div>
@@ -63,7 +63,7 @@
     .then(res => res.json())
     .then(data => {
       const tbody = document.getElementById('inventoryData');
-      tbody.innerHTML = ''; // Clear existing rows
+      tbody.innerHTML = ''; 
       data.forEach(inventory => {
         const row = document.createElement('tr');
         row.innerHTML = `
