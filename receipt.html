@@ -174,10 +174,13 @@
         document.getElementById('receipt-payment').textContent = payment.toFixed(2);
         document.getElementById('receipt-change').textContent = change >= 0 ? change.toFixed(2) : 'Insufficient payment';
 
+        // === CUSTOMER ID starts at 100 and auto increments ===
+        let lastCustomerId = parseInt(localStorage.getItem('lastCustomerId') || '99');
+        lastCustomerId += 1;
+        localStorage.setItem('lastCustomerId', lastCustomerId);
+        const customerId = 'CUST-' + lastCustomerId;
+
         // === SEND SALE DATA TO SERVER ===
-
-        const customerId = 'CUST-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
-
         function sendSalesToServer() {
             selectedProducts.forEach(product => {
                 const sale = {
